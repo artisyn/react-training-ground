@@ -1,0 +1,11 @@
+.counter__container {
+	.main__title {
+		text-align: center;
+	}
+	margin: 2rem auto;
+	border: 2px solid salmon;
+	height: 20rem;
+	width: 10rem;
+	display: grid;
+	place-items: center;
+}

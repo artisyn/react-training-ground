@@ -1,0 +1,10 @@
+.myBtn {
+	padding: 0.2rem 0.4rem;
+	color: black;
+	background-color: orange;
+	font-size: 1.2rem;
+	font-weight: bold;
+	border: none;
+	border-radius: 0.3rem;
+	cursor: pointer;
+}
