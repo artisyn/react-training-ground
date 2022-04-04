@@ -1,2 +1,11 @@
 .App {
+	.form__container {
+		border: 2px solid orangered;
+		width: 20rem;
+		margin: 2rem auto;
+		display: grid;
+		place-items: center;
+		gap: 1rem;
+		padding: 1rem;
+	}
 }
