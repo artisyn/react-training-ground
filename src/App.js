@@ -20,43 +20,24 @@ function App() {
 		{ id: 31, title: 'Saturn', text: 'Saturn is a planet' },
 		{ id: 41, title: 'Mars', text: 'Mars is a planet' },
 	]);
+	const createPost = (newPost) => {
+		setPostData([...postData, newPost]);
+	};
 
-	const addPost = (e) => {
-		e.preventDefault();
-
-		// const newPost = {
-		// 	id: Date.now(),
-		// 	title: post.title,
-		// 	text: post.text,
-		// };
-		setPostData([...postData, { ...post, id: Date.now() }]); // creating object directly inside (instead of newPost)
-		setPost({ title: '', text: '' });
+	const removePost = (post) => {
+		setPostData(postData.filter((el) => el.id !== post.id));
 	};
 
 	return (
 		<div className="App">
-			{/* <form className="form__container" action="">
-				<MyInput
-					value={post.title}
-					onChange={(e) =>
-						setPost({ ...post, title: e.target.value })
-					}
-					type="text"
-					placeholder="name"
-				/>
-				<MyInput
-					type="text"
-					placeholder="description"
-					value={post.text}
-					onChange={(e) => setPost({ ...post, text: e.target.value })}
-				/>
-
-				<MyButton onClick={addPost}>Create Post</MyButton>
-			</form> */}
-			<Form />
+			<Form create={createPost} />
 			{/* <Counter />
 			<ClassCounter /> */}
-			<PostList title={'Programming'} postData={postData} />
+			<PostList
+				title={'Programming'}
+				postData={postData}
+				remove={removePost}
+			/>
 			<PostList title={'Planets'} postData={postData1} />
 		</div>
 	);
@@ -64,4 +45,4 @@ function App() {
 
 export default App;
 
-// 58.47
+// 1.05

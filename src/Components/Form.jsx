@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MyInput from '../UI/input/MyInput.jsx';
 import MyButton from '../UI/button/MyButton.jsx';
 import '../Components/Form.scss';
 
-function Form() {
+function Form({ create }) {
 	const [post, setPost] = useState({ title: '', text: '' });
-	const addPost = () => {};
+
+	const addPost = (e) => {
+		e.preventDefault();
+		const newPost = {
+			...post,
+			id: Date.now(),
+		};
+		create(newPost);
+		// setPostData([...postData, { ...post, id: Date.now() }]); // creating object directly inside (instead of newPost)
+		setPost({ title: '', text: '' });
+	};
+
 	return (
 		<form className="form__container" action="">
 			<MyInput
