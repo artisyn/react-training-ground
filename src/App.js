@@ -4,8 +4,11 @@ import PostList from './Components/PostList';
 import Form from './Components/Form';
 import MyModal from './UI/modal/MyModal';
 import PostFilter from './Components/PostFilter';
+import MyButton from './UI/button/MyButton';
+import { usePosts } from './hooks/usePost';
 
 function App() {
+	const [modal, setModal] = useState(false);
 	const [postData, setPostData] = useState([
 		{ id: 1, title: 'Java', text: 'dJava is a programming language' },
 		{ id: 2, title: 'C++', text: 'cC++ is a programming language' },
@@ -23,33 +26,40 @@ function App() {
 
 	const createPost = (newPost) => {
 		setPostData([...postData, newPost]);
+		setModal(false);
 	};
 
 	const removePost = (post) => {
 		setPostData(postData.filter((el) => el.id !== post.id));
 		setPostData1(postData1.filter((el) => el.id !== post.id));
 	};
+	const sortedAndSearchedPosts = usePosts(
+		postData,
+		filter.sort,
+		filter.query
+	);
 
-	const sortedPosts = useMemo(() => {
-		console.log('useMemo worked');
-		if (filter.sort) {
-			return [...postData].sort((a, b) =>
-				a[filter.sort].localeCompare(b[filter.sort])
-			);
-		}
-		console.log('last');
-		return postData;
-	}, [filter.sort, postData]);
+	// const sortedPosts = useMemo(() => {
+	// 	console.log('useMemo worked');
+	// 	if (filter.sort) {
+	// 		return [...postData].sort((a, b) =>
+	// 			a[filter.sort].localeCompare(b[filter.sort])
+	// 		);
+	// 	}
+	// 	console.log('last');
+	// 	return postData;
+	// }, [filter.sort, postData]);
 
-	const sortedAndSearchedPosts = useMemo(() => {
-		return sortedPosts.filter((post) =>
-			post.title.toLowerCase().includes(filter.query.toLowerCase())
-		);
-	}, [filter.query, sortedPosts]);
+	// const sortedAndSearchedPosts = useMemo(() => {
+	// 	return sortedPosts.filter((post) =>
+	// 		post.title.toLowerCase().includes(filter.query.toLowerCase())
+	// 	);
+	// }, [filter.query, sortedPosts]);
 
 	return (
 		<div className="App">
-			<MyModal>
+			<MyButton onClick={() => setModal(true)}>Create Post</MyButton>
+			<MyModal visible={modal} setVisible={setModal}>
 				<Form create={createPost} />
 			</MyModal>
 
@@ -74,4 +84,4 @@ function App() {
 
 export default App;
 
-// 1.26
+// 1.36

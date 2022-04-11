@@ -7,4 +7,6 @@
 	border: none;
 	border-radius: 0.3rem;
 	cursor: pointer;
+	display: block;
+	margin: 0 auto;
 }

@@ -4,7 +4,13 @@ import MySelect from '../UI/select/MySelect';
 
 function PostFilter({ filter, setFilter }) {
 	return (
-		<div>
+		<div
+			style={{
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+			}}
+		>
 			<MyInput
 				placeholder="Search Post..."
 				value={filter.query}
