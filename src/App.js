@@ -6,6 +6,7 @@ import MyModal from './UI/modal/MyModal';
 import PostFilter from './Components/PostFilter';
 import MyButton from './UI/button/MyButton';
 import { usePosts } from './hooks/usePost';
+import axios from 'axios';
 
 function App() {
 	const [modal, setModal] = useState(false);
@@ -38,6 +39,12 @@ function App() {
 		filter.sort,
 		filter.query
 	);
+
+	const fetchPosts = async () => {
+		const request = await axios.get(
+			'https://jsonplaceholder.typicode.com/posts'
+		);
+	};
 
 	// const sortedPosts = useMemo(() => {
 	// 	console.log('useMemo worked');
@@ -84,4 +91,4 @@ function App() {
 
 export default App;
 
-// 1.36
+// 1.37
