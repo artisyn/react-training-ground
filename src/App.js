@@ -1,5 +1,5 @@
 import './App.scss';
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PostList from './Components/PostList';
 import Form from './Components/Form';
 import MyModal from './UI/modal/MyModal';
@@ -7,15 +7,14 @@ import PostFilter from './Components/PostFilter';
 import MyButton from './UI/button/MyButton';
 import { usePosts } from './hooks/usePost';
 import axios from 'axios';
+import PostService from './API/PostService';
+import Loader from './UI/Loader/Loader';
+import { useFetching } from './hooks/useFetching';
+import { getPagesArray, getPagesCount } from './utils/pages';
 
 function App() {
 	const [modal, setModal] = useState(false);
-	const [postData, setPostData] = useState([
-		{ id: 1, title: 'Java', text: 'dJava is a programming language' },
-		{ id: 2, title: 'C++', text: 'cC++ is a programming language' },
-		{ id: 3, title: 'C#', text: 'bC# is a programming language' },
-		{ id: 4, title: 'Go', text: 'aGo is a programming language' },
-	]);
+	const [postData, setPostData] = useState([]);
 	const [postData1, setPostData1] = useState([
 		{ id: 11, title: 'Earth', text: 'Earth is a planet' },
 		{ id: 21, title: 'Mercury', text: 'Mercury is a planet' },
@@ -24,6 +23,20 @@ function App() {
 	]);
 
 	const [filter, setFilter] = useState({ sort: '', query: '' });
+	const [totalPages, setTotalPages] = useState(0);
+	const [limit, setLimit] = useState(10);
+	const [page, setPage] = useState(1);
+	const [fetchPosts, isPostLoading, postError] = useFetching(async () => {
+		const response = await PostService.getAll(limit, page);
+		console.log(response);
+		setPostData(response.data);
+		const totalCount = response.headers['x-total-count'];
+		setTotalPages(getPagesCount(totalCount, limit));
+	});
+
+	let pagesArray = getPagesArray(totalPages);
+
+	console.log(pagesArray);
 
 	const createPost = (newPost) => {
 		setPostData([...postData, newPost]);
@@ -40,11 +53,17 @@ function App() {
 		filter.query
 	);
 
-	const fetchPosts = async () => {
-		const request = await axios.get(
-			'https://jsonplaceholder.typicode.com/posts'
-		);
-	};
+	useEffect(() => {
+		fetchPosts();
+	}, []);
+
+	// const fetchPosts = async () => {
+	// 	setIsPostLoading(true);
+	// 	const posts = await PostService.getAll();
+	// 	console.log(posts);
+	// 	setPostData(posts);
+	// 	setIsPostLoading(false);
+	// };
 
 	// const sortedPosts = useMemo(() => {
 	// 	console.log('useMemo worked');
@@ -65,6 +84,12 @@ function App() {
 
 	return (
 		<div className="App">
+			<button
+				onClick={fetchPosts}
+				style={{ display: 'block', margin: '1rem auto' }}
+			>
+				Get Posts
+			</button>
 			<MyButton onClick={() => setModal(true)}>Create Post</MyButton>
 			<MyModal visible={modal} setVisible={setModal}>
 				<Form create={createPost} />
@@ -75,11 +100,31 @@ function App() {
 
 			{/* <Counter />
 			<ClassCounter /> */}
-			<PostList
-				title={'Programming'}
-				postData={sortedAndSearchedPosts}
-				remove={removePost}
-			/>
+			{postError ? <h1>Failed to Load Data {postError}</h1> : ''}
+			{isPostLoading ? (
+				<Loader />
+			) : (
+				<PostList
+					title={'Programming'}
+					postData={sortedAndSearchedPosts}
+					remove={removePost}
+				/>
+			)}
+
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					flexWrap: 'wrap',
+					justifyContent: 'center',
+					margin: '1rem auto',
+				}}
+			>
+				{pagesArray.map((el) => (
+					<MyButton style={{ margin: '0 .2rem' }}>{el}</MyButton>
+				))}
+			</div>
+
 			<PostList
 				remove={removePost}
 				title={'Planets'}
@@ -91,4 +136,4 @@ function App() {
 
 export default App;
 
-// 1.37
+// 2.03

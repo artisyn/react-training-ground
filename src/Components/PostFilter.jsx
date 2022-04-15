@@ -26,7 +26,7 @@ function PostFilter({ filter, setFilter }) {
 				}
 				options={[
 					{ value: 'title', name: 'By Name' },
-					{ value: 'text', name: 'By Definition' },
+					{ value: 'body', name: 'By Definition' },
 				]}
 				defaultValue={'Arrange By'}
 			/>

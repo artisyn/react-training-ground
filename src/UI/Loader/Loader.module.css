@@ -1,0 +1,19 @@
+.loader {
+	margin: 1rem auto;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 3px dashed orangered;
+	animation: rotate 1s ease infinite;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+		border: 3px dashed orangered;
+	}
+	100% {
+		transform: rotate(360deg);
+		border: 6px dashed orangered;
+	}
+}

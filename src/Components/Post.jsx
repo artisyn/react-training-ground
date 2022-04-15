@@ -7,7 +7,7 @@ function Post({ data, remove }) {
 			<h1 className="post__title">
 				{data?.title ? data.title : 'No title'}
 			</h1>
-			<p className="post__text">{data?.text ? data.text : 'No text'}</p>
+			<p className="post__text">{data?.body ? data.body : 'No text'}</p>
 			<button onClick={() => remove(data)} className="post__delete">
 				Delete Post
 			</button>
