@@ -6,18 +6,38 @@
 	border: 2px solid olivedrab;
 	display: grid;
 	place-items: center;
-	.post__delete {
-		border: none;
-		background-color: olivedrab;
-		color: white;
-		font-size: 1.4rem;
-		padding: 0.4rem;
-		border-radius: 0.5rem;
-		cursor: pointer;
-		transition: all ease 0.3s;
-		&:hover {
-			background-color: rgb(146, 194, 50);
-			transform: scale(1.02);
+
+	.button__container {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		.post__open {
+			border: none;
+			background-color: rgb(205, 235, 145);
+			color: white;
+			font-size: 1.4rem;
+			padding: 0.4rem;
+			border-radius: 0.5rem;
+			cursor: pointer;
+			transition: all ease 0.3s;
+			&:hover {
+				background-color: rgb(161, 187, 109);
+				transform: scale(1.02);
+			}
+		}
+		.post__delete {
+			border: none;
+			background-color: olivedrab;
+			color: white;
+			font-size: 1.4rem;
+			padding: 0.4rem;
+			border-radius: 0.5rem;
+			cursor: pointer;
+			transition: all ease 0.3s;
+			&:hover {
+				background-color: rgb(146, 194, 50);
+				transform: scale(1.02);
+			}
 		}
 	}
 }

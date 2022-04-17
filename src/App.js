@@ -1,24 +1,22 @@
 import './App.scss';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import About from './pages/About';
 import Posts from './pages/Posts';
+import Navbar from './Components/Navbar';
+import WrongPage from './pages/WrongPage';
+import AppRouter from './UI/AppRouter';
 
 function App() {
 	return (
 		<BrowserRouter>
-			here
-			<Route path={'/about'}>
-				<About />
-			</Route>
-			<Route path="/posts">
-				<Posts />
-			</Route>
+			<Navbar />
+			<AppRouter />
 		</BrowserRouter>
 	);
 }
 
 export default App;
 
-// 2.16
+// 2.23

@@ -8,9 +8,15 @@ function Post({ data, remove }) {
 				{data?.title ? data.title : 'No title'}
 			</h1>
 			<p className="post__text">{data?.body ? data.body : 'No text'}</p>
-			<button onClick={() => remove(data)} className="post__delete">
-				Delete Post
-			</button>
+
+			<div className="button__container">
+				<button onClick={() => remove(data)} className="post__open">
+					Open Post
+				</button>
+				<button onClick={() => remove(data)} className="post__delete">
+					Delete Post
+				</button>
+			</div>
 		</div>
 	);
 }

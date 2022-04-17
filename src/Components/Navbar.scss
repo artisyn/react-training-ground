@@ -1,0 +1,19 @@
+.navbar {
+	border: 2px solid red;
+	background-color: rgb(239, 209, 152);
+	min-height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 1rem;
+	padding: 1rem;
+	.navbar__link {
+		font-size: 1.2rem;
+		font-weight: bold;
+		border: 1px solid black;
+		padding: 0.5rem;
+		border-radius: 2rem;
+		cursor: pointer;
+		background-color: rgb(255, 157, 0);
+	}
+}
