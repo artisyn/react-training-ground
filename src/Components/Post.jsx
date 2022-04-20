@@ -4,7 +4,7 @@ import '../Components/Post.scss';
 
 function Post({ data, remove }) {
 	const router = useHistory();
-	console.log(router);
+	// console.log(router);
 	return (
 		<div className="post__container">
 			<h1 className="post__title">

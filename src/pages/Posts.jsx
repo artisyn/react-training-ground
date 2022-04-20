@@ -27,11 +27,14 @@ function Posts() {
 	const [totalPages, setTotalPages] = useState(0);
 	const [limit, setLimit] = useState(10);
 	const [page, setPage] = useState(1);
+	const lastElement = useRef();
+	const observer = useRef();
+	console.log(lastElement);
 	const [fetchPosts, isPostLoading, postError] = useFetching(
 		async (limit, page) => {
 			const response = await PostService.getAll(limit, page);
-			console.log(response);
-			setPostData(response.data);
+			// console.log(response);
+			setPostData([...postData, ...response.data]);
 			const totalCount = response.headers['x-total-count'];
 			setTotalPages(getPagesCount(totalCount, limit));
 		}
@@ -39,7 +42,7 @@ function Posts() {
 
 	const changePage = (page) => {
 		setPage(page);
-		fetchPosts(limit, page);
+		// fetchPosts(limit, page);
 	};
 
 	const createPost = (newPost) => {
@@ -58,8 +61,22 @@ function Posts() {
 	);
 
 	useEffect(() => {
+		if (isPostLoading) return;
+		if (observer.current) observer.current.disconnect();
+		var callback = function (entries, observer) {
+			if (entries[0].isIntersecting && page < totalPages) {
+				console.log('Now you see me )');
+				setPage(page + 1);
+				console.log(page);
+			}
+		};
+		observer.current = new IntersectionObserver(callback);
+		observer.current.observe(lastElement.current);
+	}, [isPostLoading]);
+
+	useEffect(() => {
 		fetchPosts(limit, page);
-	}, []);
+	}, [page]);
 
 	// const fetchPosts = async () => {
 	// 	setIsPostLoading(true);
@@ -105,15 +122,19 @@ function Posts() {
 			{/* <Counter />
 			<ClassCounter /> */}
 			{postError ? <h1>Failed to Load Data {postError}</h1> : ''}
-			{isPostLoading ? (
-				<Loader />
-			) : (
-				<PostList
-					title={'Programming'}
-					postData={sortedAndSearchedPosts}
-					remove={removePost}
-				/>
-			)}
+
+			<PostList
+				title={'Programming'}
+				postData={sortedAndSearchedPosts}
+				remove={removePost}
+			/>
+			<div
+				ref={lastElement}
+				style={{ height: '1.4rem', backgroundColor: 'red' }}
+			></div>
+
+			{isPostLoading && <Loader />}
+
 			<Pagination
 				totalPages={totalPages}
 				page={page}

@@ -11,11 +11,21 @@ import { AuthContext } from './context';
 
 function App() {
 	const [isAuth, setIsAuth] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		if (localStorage.getItem('auth')) {
+			setIsAuth(true);
+		}
+		setIsLoading(false);
+	}, []);
+
 	return (
 		<AuthContext.Provider
 			value={{
 				isAuth,
 				setIsAuth,
+				isLoading,
 			}}
 		>
 			<BrowserRouter>
@@ -28,4 +38,4 @@ function App() {
 
 export default App;
 
-// 2.42
+// 2.54

@@ -3,10 +3,13 @@ import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 import { routes } from '../router/route';
 import { privateRoutes, publicRoutes } from '../router/route';
 import { AuthContext } from '../context';
+import Loader from './Loader/Loader';
 
 function AppRouter() {
-	const { isAuth, setIsAuth } = useContext(AuthContext);
-
+	const { isAuth, isLoading } = useContext(AuthContext);
+	if (isLoading) {
+		return <Loader />;
+	}
 	return isAuth ? (
 		<Switch>
 			{privateRoutes.map((el) => (

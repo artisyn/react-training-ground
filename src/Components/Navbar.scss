@@ -8,11 +8,22 @@
 	gap: 1rem;
 	padding: 1rem;
 	.navbar__link {
+		min-width: 5rem;
 		font-size: 1.2rem;
 		font-weight: bold;
 		border: 1px solid black;
-		padding: 0.5rem;
-		border-radius: 2rem;
+		padding: 0.2rem 0.5rem;
+		border-radius: 0.4rem;
+		cursor: pointer;
+		background-color: rgb(255, 157, 0);
+	}
+	button {
+		min-width: 5rem;
+		font-size: 1.2rem;
+		font-weight: bold;
+		border: 1px solid black;
+		padding: 0.2rem 0.5rem;
+		border-radius: 0.4rem;
 		cursor: pointer;
 		background-color: rgb(255, 157, 0);
 	}
