@@ -7,16 +7,25 @@ import Posts from './pages/Posts';
 import Navbar from './Components/Navbar';
 import WrongPage from './pages/WrongPage';
 import AppRouter from './UI/AppRouter';
+import { AuthContext } from './context';
 
 function App() {
+	const [isAuth, setIsAuth] = useState(false);
 	return (
-		<BrowserRouter>
-			<Navbar />
-			<AppRouter />
-		</BrowserRouter>
+		<AuthContext.Provider
+			value={{
+				isAuth,
+				setIsAuth,
+			}}
+		>
+			<BrowserRouter>
+				<Navbar />
+				<AppRouter />
+			</BrowserRouter>
+		</AuthContext.Provider>
 	);
 }
 
 export default App;
 
-// 2.33
+// 2.42

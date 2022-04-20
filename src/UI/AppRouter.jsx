@@ -1,27 +1,36 @@
-import React from 'react';
-import About from '../pages/About';
-import Posts from '../pages/Posts';
-import WrongPage from '../pages/WrongPage';
+import React, { useContext } from 'react';
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
-import PostPage from '../pages/PostPage';
+import { routes } from '../router/route';
+import { privateRoutes, publicRoutes } from '../router/route';
+import { AuthContext } from '../context';
 
 function AppRouter() {
-	return (
+	const { isAuth, setIsAuth } = useContext(AuthContext);
+
+	return isAuth ? (
 		<Switch>
-			<Route path={'/about'}>
-				<About />
-			</Route>
-			<Route exact path="/posts">
-				<Posts />
-			</Route>
-			<Route path={'/wrong'}>
-				<WrongPage />
-			</Route>
-			<Route exact path={'/posts/:id'}>
-				<PostPage />
-			</Route>
+			{privateRoutes.map((el) => (
+				<Route
+					component={el.component}
+					path={el.path}
+					exact={el.exact}
+					key={el.path}
+				/>
+			))}
 
 			<Redirect to={'/posts'} />
+		</Switch>
+	) : (
+		<Switch>
+			{publicRoutes.map((el) => (
+				<Route
+					component={el.component}
+					path={el.path}
+					exact={el.exact}
+					key={el.path}
+				/>
+			))}
+			<Redirect to={'/login'} />
 		</Switch>
 	);
 }
